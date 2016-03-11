@@ -30,11 +30,11 @@ At the top of ``run_selenium_testrunner.py``, adjust RUNNER to the Test Runner y
 
     RUNNER = "http://localhost/<path-to-test-runner>" 
 
-The return status is the failed count (same as qx-phantom), but see --help for additional xml, json and plain text output options.
+The return status is the failed count (same as qx-phantom), but there are additional xml, json and plain text output options.
 
 
 ## Usage
 
-Run run_selenium_testrunner.py
+Basic ``run_selenium_testrunner.py --runner=http://localhost/<path-to-test-runner>``
 
-The setup parameters can alternatively be passed directly. Run ``run_selenium_testrunner.py --help``
+``run_selenium_testrunner.py --help`` for more options
