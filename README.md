@@ -1,17 +1,15 @@
 # qx-selenium
 
-Author: Robert Cosgrove
-
 
 This is a modification of qx-phantom.js adapted for use with the Selenium Webdriver Python bindings
- * [qx-phantom]https://github.com/qooxdoo/qx-phantom
+ * [qx-phantom] https://github.com/qooxdoo/qx-phantom
 
 qx-selenium allows you to run qooxdoo testrunner unit tests from the command line.
 
 If don't want to or cant use Phantom in your environment this may be an alternative.  This has been tested with Selenium 2.5x.
 
 Note this should not be confused with running actual Selenium ux tests which this is not intended for. Instead see
- * [qxwebdriver-java]https://github.com/qooxdoo/qxwebdriver-java
+ * [qxwebdriver-java] https://github.com/qooxdoo/qxwebdriver-java
 
 ## Setup
 
