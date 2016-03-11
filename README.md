@@ -1,4 +1,4 @@
-# qx-selenium
+# qx-testrunner-selenium
 
 
 This is a modification of qx-phantom.js adapted for use with the Selenium Webdriver Python bindings
@@ -35,6 +35,8 @@ The return status is the failed count (same as qx-phantom), but there are additi
 
 ## Usage
 
-Basic ``run_selenium_testrunner.py --runner=http://localhost/<path-to-test-runner>``
+Basic 
+``run_selenium_testrunner.py --runner=http://localhost/<path-to-test-runner>``
 
-``run_selenium_testrunner.py --help`` for more options
+For more options including file output
+``run_selenium_testrunner.py --help``

@@ -4,6 +4,7 @@
 # This requires testrunner to be built with: 
 # generate.py test -m TESTRUNNER_VIEW:testrunner.view.Console -m BUILD_PATH:test-console
 #
+# Basic Usage: run_selenium_testrunner.py --runner="http://localhost/<path-to-test-runner>" 
 
 from selenium import webdriver
 

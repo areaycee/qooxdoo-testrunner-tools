@@ -1,8 +1,6 @@
 // Author: Robert Cosgrove
-// Created: 1/10/2015
 // Desc: This is a modification of qx-phantom.js adapted for use with the Selenium Webdriver
 // See: https://github.com/qooxdoo/qx-phantom
-// Usage: See run_selenium_testrunner.py
 
 (function() {
   var CONSOLE, VERBOSE, loadedBefore, page, testClasses, url, results, formatTestResults, interval;
