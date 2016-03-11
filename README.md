@@ -26,7 +26,7 @@ Verify the build was successful by opening the console view in a browser. In the
 
     2619 tests ready. Call qx.core.Init.getApplication().runner.view.run() to start.
 
-At the top of ``run_selenium_testrunner.py``, adjust RUNNER to the Test Runner you built before or simply pass --runner
+At the top of ``testrunner-selenium.py``, adjust RUNNER to the Test Runner you built before or simply pass --runner
 
     RUNNER = "http://localhost/<path-to-test-runner>" 
 
@@ -36,7 +36,7 @@ The return status is the failed count (same as qx-phantom), but there are additi
 ## Usage
 
 Basic 
-``run_selenium_testrunner.py --runner=http://localhost/<path-to-test-runner>``
+``testrunner-selenium.py --runner=http://localhost/<path-to-test-runner>``
 
 For more options including file output
-``run_selenium_testrunner.py --help``
+``testrunner-selenium.py --help``
