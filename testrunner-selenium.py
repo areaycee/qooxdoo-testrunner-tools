@@ -20,16 +20,17 @@ OUTPUT_PATH = None
 
 # local.. Does not work in Chrome! (This is set up for FF anyway)
 #RUNNER = join('file:///', 'path', 'to', 'test', 'runner')
+
 # hosted
 #RUNNER = "http://localhost/<path-to-test-runner>" 
 
 RUNNER = ""
 
 # xml, json, txt
-OUTPUT_FORMAT = "xml"  
+OUTPUT_FORMAT = ""  
 
 
-HELP = "\nSet these or just edit the script header!\n\n --runner='runner path' Either http(s):// or file:/// \n\n --format='format'      'xml' (basic JUnit), 'json', 'txt'\n\n --output='path/filename' (file ext added)\n"
+HELP = "\nSet these or just edit the script header!\n\n --runner='runner path' Either http(s):// or file:/// .. also supports unqualified paths relative to the working dir\n\n --format='format'      'xml' (basic JUnit), 'json', 'txt'\n\n --output='path/filename' (file ext added)\n"
 
 # The maximum seconds to wait for the tests to complete.  
 # If the tests hang and don't complete for some reason then you wont find out about it until this expires.
@@ -48,6 +49,7 @@ def main(argv):
     runnerPath      = RUNNER
     outputFormat    = OUTPUT_FORMAT
     outputPath      = OUTPUT_PATH
+    
     # args
     for opt, arg in opts:
         if opt in ("-h"):
@@ -64,16 +66,30 @@ def main(argv):
         print HELP
         sys.exit(2)
 
+    # treat anything without the following prefix as a path relative to the wd
+    r = re.compile(r'^(http://|https://|file://|\w:\\|/)')
+    if not r.search(runnerPath):
+        runnerPath = "file:///"+os.getcwd()+"/"+runnerPath
+          
+
     print '\nQX Selenium Testrunner'
 
-    browser = webdriver.Firefox()
-    browser.set_window_size(200,50)
-    browser.set_window_position(0, 0)
-    browser.get(runnerPath)
+    print 'using runner at: ' + runnerPath
 
     try:
-        # run test
+        browser = webdriver.Firefox()
+        browser.set_window_size(200,50)
+        browser.set_window_position(0, 0)
+        browser.get(runnerPath)
+    except Exception, e:
+        print e
+        browser.close()
+        sys.exit(1)
+
+    # run tests
+    try:
         js = open(join(PATH, 'qx-selenium.js'))
+        browser.execute_script("window.QX_SELENIUM_OUTPUT_FORMAT = String('" + outputFormat + "');")
         browser.execute_script(js.read())
         browser.implicitly_wait(MAX_WAIT)
         print browser.find_element_by_id("test_results_min").get_attribute('value')+'\n'
@@ -105,9 +121,7 @@ def main(argv):
             print 'All tests successful!\n'
             sys.exit(0)
 
-        
     except Exception, e:
-        print "Error: Something probably went wrong with the webdriver"
         print e
         browser.close()
         sys.exit(1)
