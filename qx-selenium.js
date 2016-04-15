@@ -187,7 +187,10 @@
                 // create an element for the failed count output
                 createOutputElm("test_failed", getFailedCount(results));
 
-                // formatted output
+                // always create the minimal output
+                createOutputElm("test_results_min", formatTestResults(results, "min"));
+
+                // detailed output
                 var outFmt = window.QX_SELENIUM_OUTPUT_FORMAT;
                 if (outFmt) {
                     if (OUTPUT_FORMATS.indexOf(outFmt) > -1) {
@@ -197,9 +200,7 @@
                         throw "Invalid output format specified";
                     }
                 }
-                // always create the minimal output
-                createOutputElm("test_results_min", formatTestResults(results, "min"));
-
+                
                 // end execution
                 clearInterval(interval);
                 return error.length;
