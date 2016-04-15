@@ -1,6 +1,6 @@
 #!/usr/bin/env python
-# Execute qx testrunner and optionally extract report
-#
+# Execute qx testrunner in Selenium and optionally extract report
+# @author: Robert Cosgrove <r.cosgrove@griffith.edu.au>
 
 from selenium import webdriver
 import sys, shutil, os, fileinput, re, argparse
@@ -10,18 +10,8 @@ PATH = os.path.dirname(os.path.abspath(__file__))
 
 OUTPUT_PATH = PATH
 
-#OUTPUT_PATH = join(PATH, 'test-reports')
-
 # output filename
 OUTPUT_NAME = 'qx-testrunner-results'
-
-# local.. Does not work in Chrome! (This is set up for FF anyway)
-#RUNNER = join('file:///', 'path', 'to', 'test', 'runner')
-
-# hosted
-#RUNNER = "http://localhost/<path-to-test-runner>" 
-
-RUNNER = ""
 
 # xml, json, txt
 OUTPUT_FORMAT = ""  
@@ -52,10 +42,7 @@ def main(argv):
         args.runner = "file:///"+os.getcwd()+"/"+args.runner
 
     print '\nQX Selenium Testrunner'
-
     print 'Using runner at: ' + args.runner
-
-    #print  outputPath + OUTPUT_NAME + outputFormat
 
     try:
         browser = webdriver.Firefox()
@@ -105,7 +92,6 @@ def main(argv):
         print e
         browser.close()
         sys.exit(1)
-
 
 if __name__ == "__main__":
    main(sys.argv[1:])
