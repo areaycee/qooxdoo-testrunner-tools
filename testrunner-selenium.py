@@ -27,11 +27,11 @@ def main(argv):
     epilog='This requires Testrunner to be built with: generate.py test -m TESTRUNNER_VIEW:testrunner.view.Console -m BUILD_PATH:test-console')
     parser.add_argument('runner',
                        help='Can be http(s)://, file:/// or relative to the working dir. Include index.html')
-    parser.add_argument('--format', dest='outFormat', default=OUTPUT_FORMAT, 
-                       help='xml (basic JUnit), json, txt (simple readable) none (default)')
+    parser.add_argument('--format', dest='outFormat', default=OUTPUT_FORMAT, choices=['html','json','xml', 'none'],
+                       help='xml (basic JUnit), json (direct dump), html (simple readable) none (default)')
     parser.add_argument('--outpath', dest='outPath', default=OUTPUT_PATH, 
                        help='Output path. Default is working dir')
-    parser.add_argument('--maxwait', dest='maxWait', default=MAX_WAIT, 
+    parser.add_argument('--maxwait', dest='maxWait', default=MAX_WAIT, type=int,
                        help='Maximum time in seconds to wait for tests to complete (default 5 minutes)')
 
     args = parser.parse_args()
@@ -39,10 +39,11 @@ def main(argv):
     # treat anything without the following prefix as a path relative to the wd
     r = re.compile(r'^(http://|https://|file://|\w:\\|/)')
     if not r.search(args.runner):
-        args.runner = "file:///"+os.getcwd()+"/"+args.runner
+        args.runner = "file:///" + join(os.getcwd(), args.runner)
 
     print '\nQX Selenium Testrunner'
     print 'Using runner at: ' + args.runner
+    sys.stdout.flush()
 
     try:
         browser = webdriver.Firefox()
@@ -63,14 +64,14 @@ def main(argv):
         print browser.find_element_by_id("test_results_min").get_attribute('value')+'\n'
 
         if args.outFormat and args.outPath and OUTPUT_NAME:
-            # test result
+            # get test result output
             resultElm = browser.find_element_by_id("test_results_"+args.outFormat)
             if not resultElm:
                  print "Invalid output format " + args.outFormat
                  sys.exit(1)
-
-            # output to file
             results = resultElm.get_attribute('value')
+
+            # save to file
             outPath = join(args.outPath, OUTPUT_NAME + '.' + args.outFormat)
             out     = open(outPath, 'w')
             out.write(results)

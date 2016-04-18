@@ -9,7 +9,7 @@
 
     CONSOLE = false;
 
-    OUTPUT_FORMATS = ["txt", "xml", "min", "json"];
+    OUTPUT_FORMATS = ["html", "xml", "min", "json"];
 
     page = window;
 
@@ -21,14 +21,15 @@
             case "json":
                 return JSON.stringify(results);
 
-              // Simple readable output
-            case "txt":
-                var out = '';
+            // Simple readable output
+            case "html":
+                var out = "<html><body>";
                 for (var testName in results) {
                     var test = results[testName];
                     var names = testName.match(/(.+):(.+)/);
-                    out += ":" + test.state + " :" + names[1] + ' :' + names[2] + ",";
+                    out += ":" + test.state + " :" + names[1] + ' :' + names[2] + "<br>\r\n";
                 }
+                out += "</body></html>";
                 return out;
 
             // Minimal readable output.
